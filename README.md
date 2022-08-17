@@ -1,2 +1,3 @@
-# duckie-branding-page
-덕키 브랜딩 페이지
+# duckie-web
+
+덕키 웹 페이지
