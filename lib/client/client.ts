@@ -53,7 +53,7 @@ abstract class EndpointClient {
                 method: endpoint.method,
                 query: pick(args, endpoint.queryParams || ([] as any)),
                 body: pick(args, endpoint.bodyParams || ([] as any)),
-                headers: endpoint.headers instanceof Function ? endpoint.headers() : endpoint.headers,
+                headers: endpoint.headers,
             });
         };
     }

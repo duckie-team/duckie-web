@@ -15,10 +15,4 @@ export const GetRecommendations: Endpoint<GetRecommendationsParameter, GetRecomm
     method: "GET",
     path: "/recommendations",
     queryParams: ["page"],
-    headers: () => {
-        const accessToken = localStorage.getItem("accessToken");
-        return {
-            "Authorization": `Bearer ${accessToken}`,
-        };
-    }
-}
+};

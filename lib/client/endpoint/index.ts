@@ -11,7 +11,7 @@ export type Endpoint<
     pathParams?: (keyof Parameter)[];
     queryParams?: (keyof Parameter)[];
     bodyParams?: (keyof Parameter)[];
-    headers?: Record<string, string> | (() => Record<string, string>);
+    headers?: Record<string, string>;
 };
 
 
