@@ -10,13 +10,22 @@ export default function Onboarding() {
         localStorage.clear()
     };
 
+    const routeToHome = () => {
+        router.push('/home')
+    }
 
     return (
-        <button type="button" onClick={() => {
-            routeToIntro()
-        }
-        }>
-            로그아웃 하기
-        </button>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '20px' }}>
+            <button type="button" onClick={() => {
+                routeToHome()
+            }}>
+                홈으로 가기
+            </button>
+            <button type="button" onClick={() => {
+                routeToIntro()
+            }}>
+                로그아웃 하기
+            </button>
+        </div>
     )
 }

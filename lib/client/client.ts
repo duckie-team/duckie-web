@@ -53,7 +53,7 @@ abstract class EndpointClient {
                 method: endpoint.method,
                 query: pick(args, endpoint.queryParams || ([] as any)),
                 body: pick(args, endpoint.bodyParams || ([] as any)),
-                headers: endpoint.headers,
+                headers: endpoint.headers instanceof Function ? endpoint.headers() : endpoint.headers,
             });
         };
     }
@@ -109,5 +109,9 @@ export class ApiClient extends EndpointClient {
 
     readonly login = {
         postKakao: this.endpointBuilder(API.Auth.PostAuthKakao),
+    }
+
+    readonly home = {
+        getRecommendations: this.endpointBuilder(API.Home.GetRecommendations),
     }
 }
