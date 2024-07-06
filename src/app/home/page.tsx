@@ -1,30 +1,16 @@
-'use client';
-import {useEffect, useState} from "react";
 import {api} from "../../../lib/api";
-import {GetRecommendationsResponse} from "../../../lib/client/endpoint/home.endpoint";
-import {useSearchParams} from "next/navigation";
-import NavBar from "../../../components/common/DuckieNavBar";
-import DuckieNavBar from "../../../components/common/DuckieNavBar";
+import { HomeExamItem } from "@/app/home/HomeExamItem";
+async function fetchRecommendations(page: number) {
+    const res = await api.home.getRecommendations({
+        page: page + 1
+    })
+    console.log(res);
+    return res;
+}
 
-export default function Home() {
-    const [recommendations, setRecommendations] = useState<GetRecommendationsResponse | null>(null);
-    const searchParams = useSearchParams();
-    const page = Number(searchParams.get('page')) || 1;
+export default async function Home(props: any) {
 
-    useEffect(() => {
-        const fetchRecommendations = async () => {
-            try {
-                const res = await api.home.getRecommendations({
-                    page
-                });
-                setRecommendations(res);
-            } catch (error) {
-                console.error('Failed to fetch recommendations:', error);
-            }
-        };
-
-        fetchRecommendations().then();
-    }, [page]);
+    const recommendations = await fetchRecommendations(0)
 
     return (
         <div>
@@ -71,14 +57,12 @@ export default function Home() {
                                     <p>{recommendation.tag.name}</p>
                                     <ul style={{display: 'flex', flexDirection: 'row', gap: '10px'}}>
                                         {recommendation.exams.map(exam => (
-                                            <li key={exam.id} style={{listStyleType: 'none'}}>
-                                                <h4>{exam.title}</h4>
-                                                <img
-                                                    src={exam.thumbnailUrl}
-                                                    alt={exam.title}
-                                                    style={{width: '150px', height: 'auto'}}
-                                                />
-                                            </li>
+                                          <HomeExamItem
+                                            key={exam.id}
+                                            id={exam.id}
+                                            title={exam.title}
+                                            thumbnailUrl={exam.thumbnailUrl}
+                                          />
                                         ))}
                                     </ul>
                                 </li>

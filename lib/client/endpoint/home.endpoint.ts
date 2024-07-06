@@ -12,7 +12,7 @@ export type GetRecommendationsResponse = {
 };
 
 export const GetRecommendations: Endpoint<GetRecommendationsParameter, GetRecommendationsResponse> = {
-    method: "GET",
+    method: "get",
     path: "/recommendations",
     queryParams: ["page"],
 };

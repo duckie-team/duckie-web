@@ -76,8 +76,14 @@ abstract class EndpointClient {
       ...headers,
     };
     try {
-      if (method == 'POST') {
-        const response = await RequestTimeoutError.rejectAfterTimeout(
+      let response = await RequestTimeoutError.rejectAfterTimeout(
+        fetch(url, {
+          headers: _headers,
+        }),
+        this.timeoutMs
+      );
+      if (method.toUpperCase() == 'POST') {
+        response = await RequestTimeoutError.rejectAfterTimeout(
           fetch(url, {
             method: method.toUpperCase(),
             headers: _headers,
@@ -85,16 +91,9 @@ abstract class EndpointClient {
           }),
           this.timeoutMs
         );
-        return response.json();
-      } else {
-        const response = await RequestTimeoutError.rejectAfterTimeout(
-          fetch(url, {
-            headers: _headers,
-          }),
-          this.timeoutMs
-        );
-        return response.json();
       }
+      return response.json();
+
     } catch (error: any) {
       if (error?.response) {
         throw buildRequestError(error.response);
@@ -118,6 +117,22 @@ export class ApiClient extends EndpointClient {
   }
 
   readonly user = {
-    get: this.endpointBuilder(API.User.GetUser)
+    get: this.endpointBuilder(API.User.GetUser),
+    patch: this.endpointBuilder(API.User.PatchUser),
+    postNickNameCheck: this.endpointBuilder(API.User.PostUserCheckNickName),
   }
+
+  readonly ranking = {
+
+  }
+
+  readonly heart = {
+
+  }
+
+  readonly files = {
+    
+  }
+  
+
 }
