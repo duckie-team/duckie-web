@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { api } from "../../../../lib/api";
 import { showToast } from 'react-next-toast';
 import { APIResponseError } from "../../../../lib/client/error";
+import { UserStatus } from "../../../../lib/client/object/user.object";
 
 // 1. use client 싹 다 없애기
 // 2. useEffect -> serverComponent, serverAction, middleWare를 사용해서 처리하기
@@ -28,7 +29,16 @@ export default function Login() {
             showToast.success(`${res.user.email}님 로그인을 무사히 성공했습니다`)
             localStorage.setItem("accessToken", res.accessToken);
             api.updateAuth(res.accessToken);
-            router.push("/onboarding");
+
+            const user = res.user
+
+            if (user.status == UserStatus.NEW) {
+              router.push("/onboarding");
+            } else if (user.status == UserStatus.READY) {
+              router.push('/home');
+            }
+
+
           } catch (err) {
             if (err instanceof APIResponseError) {
               showToast.error(`서버가 요청을 거부했습니다. ${err.code}`);

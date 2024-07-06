@@ -3,5 +3,12 @@ export type UserObject = {
   nickName: string;
   profileImageUrl: string;
   email: string;
-  status: "NEW" | "READY" | "BANNED" | "SIGN_OUT";
+  status: UserStatus;
 };
+
+export enum UserStatus {
+  NEW = "NEW",
+  READY = "READY",
+  BANNED = "BANNED",
+  SIGN_OUT = "SIGN_OUT"
+}
