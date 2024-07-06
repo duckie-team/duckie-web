@@ -3,6 +3,8 @@ import {useEffect, useState} from "react";
 import {api} from "../../../lib/api";
 import {GetRecommendationsResponse} from "../../../lib/client/endpoint/home.endpoint";
 import {useSearchParams} from "next/navigation";
+import NavBar from "../../../components/common/DuckieNavBar";
+import DuckieNavBar from "../../../components/common/DuckieNavBar";
 
 export default function Home() {
     const [recommendations, setRecommendations] = useState<GetRecommendationsResponse | null>(null);

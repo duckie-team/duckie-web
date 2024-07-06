@@ -2,7 +2,6 @@ import * as API from "./endpoint";
 import { Endpoint } from "./endpoint";
 import { buildRequestError, RequestTimeoutError } from "./error";
 import { pick } from "./util";
-import axios, { Method } from "axios";
 
 export interface ClientOptions {
   auth?: string;
@@ -15,7 +14,7 @@ type QueryParams = Record<string, any> | URLSearchParams;
 
 export interface RequestParameters {
   path: string;
-  method: Method;
+  method: string;
   query?: QueryParams;
   body?: Record<string, unknown>;
   headers?: Record<string, string>;
@@ -32,10 +31,6 @@ abstract class EndpointClient {
     this.baseUrl = options?.baseUrl;
     this.timeoutMs = options?.timeoutMs ?? 60_000;
     this.defaultHeaders = options?.defaultHeaders || {};
-  }
-
-  public updateAuth(auth?: string) {
-    this.auth = auth;
   }
 
   protected endpointBuilder<
@@ -62,7 +57,7 @@ abstract class EndpointClient {
     const headers: Record<string, string> = {};
     const authHeaderValue = this.auth;
     if (authHeaderValue !== undefined) {
-      headers["authorization"] = `Bearer ${authHeaderValue}`;
+      headers["Authorization"] = `Bearer ${authHeaderValue}`;
     }
     return headers;
   }
@@ -80,19 +75,26 @@ abstract class EndpointClient {
       ...this.defaultHeaders,
       ...headers,
     };
-
     try {
-      const response = await RequestTimeoutError.rejectAfterTimeout(
-        axios(url, {
-          method: method.toUpperCase(),
-          headers: _headers,
-          data: body,
-          params: query,
-        }),
-        this.timeoutMs
-      );
-
-      return response.data;
+      if (method == 'POST') {
+        const response = await RequestTimeoutError.rejectAfterTimeout(
+          fetch(url, {
+            method: method.toUpperCase(),
+            headers: _headers,
+            body: JSON.stringify(body),
+          }),
+          this.timeoutMs
+        );
+        return response.json();
+      } else {
+        const response = await RequestTimeoutError.rejectAfterTimeout(
+          fetch(url, {
+            headers: _headers,
+          }),
+          this.timeoutMs
+        );
+        return response.json();
+      }
     } catch (error: any) {
       if (error?.response) {
         throw buildRequestError(error.response);
@@ -111,7 +113,11 @@ export class ApiClient extends EndpointClient {
     postKakao: this.endpointBuilder(API.Auth.PostAuthKakao),
   }
 
-    readonly home = {
-        getRecommendations: this.endpointBuilder(API.Home.GetRecommendations),
-    }
+  readonly home = {
+      getRecommendations: this.endpointBuilder(API.Home.GetRecommendations),
+  }
+
+  readonly user = {
+    get: this.endpointBuilder(API.User.GetUser)
+  }
 }
