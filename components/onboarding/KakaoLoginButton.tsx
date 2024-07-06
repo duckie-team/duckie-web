@@ -18,25 +18,25 @@ const StyledKakaoLoginButton = styled.button`
     gap: 8px;
     transition: 200ms;
     color: #000000;
-
     &:hover {
         background-color: #f1d900;
     }
 `;
+
 export function KakaoLoginButton({children}: {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }) {
 
-    const kakaoLogin = () => {
-        window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_OAUTH_REDIRECT_URL}&response_type=code`;
-    };
+  const kakaoLogin = () => {
+    window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_OAUTH_REDIRECT_URL}&response_type=code`;
+  };
 
-    return (
-        <StyledKakaoLoginButton onClick={kakaoLogin}>
-            <Image src={KakaoLoginLogo} width={20} height={20} alt=""/>
-            {children}
-        </StyledKakaoLoginButton>
-    );
+  return (
+    <StyledKakaoLoginButton onClick={kakaoLogin}>
+      <Image src={KakaoLoginLogo} width={20} height={20} alt=""/>
+      {children}
+    </StyledKakaoLoginButton>
+  );
 }
 
 export const Center = styled.div`

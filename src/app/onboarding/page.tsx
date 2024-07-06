@@ -1,14 +1,14 @@
 "use client"
 import React from 'react';
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function Onboarding() {
 
-    const router = useRouter()
-    const routeToIntro = () => {
-        router.push('/')
-        localStorage.clear()
-    };
+  const router = useRouter()
+  const routeToIntro = () => {
+    router.push('/')
+    localStorage.clear()
+  };
 
     const routeToHome = () => {
         router.push('/home')
