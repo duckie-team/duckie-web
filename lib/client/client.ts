@@ -110,4 +110,8 @@ export class ApiClient extends EndpointClient {
     readonly login = {
         postKakao: this.endpointBuilder(API.Auth.PostAuthKakao),
     }
+
+    readonly home = {
+        getRecommendations: this.endpointBuilder(API.Home.GetRecommendations),
+    }
 }

@@ -8,7 +8,8 @@ export const api = new ApiClient({
             ? ""
             : localStorage.getItem("accessToken") || "",
     defaultHeaders: {
-        "x-duckie-device-name": navigator.userAgent,
+        // "x-duckie-device-name": navigator.userAgent,
+        "x-duckie-device-name": "web",
         "x-duckie-version": "1.0.0",
         "x-duckie-client": "web"
     },

@@ -16,3 +16,4 @@ export type Endpoint<
 
 
 export * as Auth from "./auth.endpoint";
+export * as Home from "./home.endpoint";
