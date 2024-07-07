@@ -1,0 +1,26 @@
+import Image from 'next/image';
+
+const RoundImage = ({src, alt, size}) => {
+  return (
+    <>
+      <div className="roundImageContainer" style={{width: size, height: size}}>
+        <Image src={src} alt={alt} size={size} layout="fill" className="roundImage"/>
+      </div>
+
+      <style jsx>{`
+        .roundImageContainer {
+          position: relative;
+          border-radius: 50%;
+          overflow: hidden;
+        }
+
+        .roundImage {
+          object-fit: cover;
+        }
+      `}</style>
+    </>
+  );
+};
+
+
+export default RoundImage;
