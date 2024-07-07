@@ -2,6 +2,17 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import NavItem from "./NavItem";
+import HomeSelectedIcon from "../../assets/ic_home_selected.svg";
+import HomeUnselectedIcon from "../../assets/ic_home_unselected.svg";
+import MusicSelectedIcon from "../../assets/ic_music_selected.svg";
+import MusicUnselectedIcon from "../../assets/ic_music_unselected.svg";
+import SearchSelectedIon from "../../assets/ic_search_selected.svg";
+import SearchUnselectedIcon from "../../assets/ic_search_unselected.svg";
+import RankingSelectedIcon from "../../assets/ic_ranking_selected.svg";
+import RankingUnselectedIcon from "../../assets/ic_ranking_unselected.svg";
+import DuckieTextLogo from "../../assets/ic_duckie_logo.svg"
+import Image from "next/image";
 
 
 <style jsx>{`
@@ -49,42 +60,67 @@ import { usePathname } from "next/navigation";
   }
 `}</style>
 
+
+
 const DuckieNavBar = () => {
   const path = usePathname();
 
-  if (path === '/' || path === '/auth/login' || path === '/onboarding') return
-  return (
-    <>
-      <div className="navbar">
-        <div className="container">
-          <div className="menu">
-            <ul>
-              <li>
-                <Link href="/home">
-                  <p>홈</p>
-                </Link>
-              </li>
-              <li>
-                <Link href="/search">
-                  <p>검색</p>
-                </Link>
-              </li>
-              <li>
-                <Link href="/ranking">
-                  <p>명예의 전당</p>
-                </Link>
-              </li>
-              <li>
-                <Link href="/profile">
-                  <p>마이 프로필</p>
-                </Link>
-              </li>
-            </ul>
+  if (path === '/home' || path === '/music' || path === '/search' || path === '/ranking') {
+    return (
+      <>
+        <div className="navbar">
+          <div className="container">
+            <div className="menu">
+              <ul>
+                <li className="logo">
+                  <Link href="/home" >
+                    <Image src={DuckieTextLogo} alt={""}/>
+
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/home">
+                    <NavItem title="홈" isSelected={path ==='/home'} selectedIcon={HomeSelectedIcon} unSelectedIcon={HomeUnselectedIcon}/>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/music">
+                    <NavItem title="듣기평가" isSelected={path ==='/music'} selectedIcon={MusicSelectedIcon} unSelectedIcon={MusicUnselectedIcon}/>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/search">
+                    <NavItem title="검색" isSelected={path ==='/search'} selectedIcon={SearchSelectedIon} unSelectedIcon={SearchUnselectedIcon}/>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/ranking">
+                    <NavItem title="명예의 전당" isSelected={path ==='/ranking'} selectedIcon={RankingSelectedIcon} unSelectedIcon={RankingUnselectedIcon}/>
+                  </Link>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
-      </div>
-    </>
-  );
+        <style jsx>{`
+          .navbar {
+            height: 100%;
+          }
+          .container {
+            padding: 12px 16px; /* 추가적인 스타일을 적용할 수 있습니다 */
+          }
+          .logo {
+            display: flex;
+            width: 240px;
+            padding: 32px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+          }
+        `}</style>
+      </>
+    );
+  }
 };
 
 

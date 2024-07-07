@@ -16,7 +16,6 @@ async function onKakaoLoginSuccess(code: string) {
     }
     return res.accessToken
   }
-
 }
 
 export default async function Login(props: any) {
