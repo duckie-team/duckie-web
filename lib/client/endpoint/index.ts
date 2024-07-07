@@ -19,3 +19,4 @@ export type SimpleResponse = {
 export * as Auth from "./auth.endpoint";
 export * as Home from "./home.endpoint";
 export * as User from "./user.endpoint";
+export * as Ranking from "./ranking.endpoint";

@@ -1,7 +1,10 @@
+import { DuckPowerObject } from "./duckPower.object";
+
 export type UserObject = {
   id: number;
   nickName: string;
   profileImageUrl: string;
+  duckPower?: DuckPowerObject;
   email: string;
   status: UserStatus;
 };

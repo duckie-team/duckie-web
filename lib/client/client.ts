@@ -76,14 +76,8 @@ abstract class EndpointClient {
       ...headers,
     };
     try {
-      let response = await RequestTimeoutError.rejectAfterTimeout(
-        fetch(url, {
-          headers: _headers,
-        }),
-        this.timeoutMs
-      );
-      if (method.toUpperCase() == 'POST') {
-        response = await RequestTimeoutError.rejectAfterTimeout(
+      if (method.toUpperCase() === 'POST') {
+        const response = await RequestTimeoutError.rejectAfterTimeout(
           fetch(url, {
             method: method.toUpperCase(),
             headers: _headers,
@@ -91,8 +85,19 @@ abstract class EndpointClient {
           }),
           this.timeoutMs
         );
+        return response.json()
+      } else {
+        const queryUrl = url + `?${convertFromJsonToQuery(query)}`
+        console.log(queryUrl)
+        const response = await RequestTimeoutError.rejectAfterTimeout(
+          fetch(queryUrl, {
+            headers: _headers,
+          }),
+          this.timeoutMs
+        );
+        return response.json();
       }
-      return response.json();
+
 
     } catch (error: any) {
       if (error?.response) {
@@ -101,6 +106,13 @@ abstract class EndpointClient {
       throw error;
     }
   }
+}
+
+function convertFromJsonToQuery(input: QueryParams | undefined) {
+  if ( input === undefined) return "";
+  return Object.entries(input)
+    .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+    .join('&');
 }
 
 /**
@@ -123,7 +135,8 @@ export class ApiClient extends EndpointClient {
   }
 
   readonly ranking = {
-
+    getUser: this.endpointBuilder(API.Ranking.GetRankingUsers),
+    getExam: this.endpointBuilder(API.Ranking.GetRankingExams),
   }
 
   readonly heart = {
@@ -131,8 +144,8 @@ export class ApiClient extends EndpointClient {
   }
 
   readonly files = {
-    
+
   }
-  
+
 
 }
