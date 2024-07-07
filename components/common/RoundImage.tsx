@@ -1,10 +1,10 @@
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 
-const RoundImage = ({src, alt, size}) => {
+const RoundImage = ({src, alt, size} : {src: string, alt: string, size: number}) => {
   return (
     <>
       <div className="roundImageContainer" style={{width: size, height: size}}>
-        <Image src={src} alt={alt} size={size} layout="fill" className="roundImage"/>
+        <Image src={src} alt={alt} width={size} height={size} layout="fill" className="roundImage"/>
       </div>
 
       <style jsx>{`

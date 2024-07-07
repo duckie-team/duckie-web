@@ -2,7 +2,9 @@
 const nextConfig = {
   reactStrictMode: false,
   images: {
-    domains: ['duckie-resource.s3.ap-northeast-2.amazonaws.com']
+    remotePatterns: [{
+      protocol: 'https', hostname: 'duckie-resource.s3.ap-northeast-2.amazonaws.com', pathname: '/problem/question-image/**',
+    }]
   }
 };
 
