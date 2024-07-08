@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import ExamButton from "@/app/exams/[id]/ExamButton";
 
 export default function ExamDetail(props: any) {
 
@@ -10,6 +11,7 @@ export default function ExamDetail(props: any) {
       <nav>
         <Link href="/intro">Open modal</Link>
       </nav>
+      <ExamButton/>
     </>
   )
 }

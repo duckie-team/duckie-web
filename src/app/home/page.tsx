@@ -1,5 +1,6 @@
 import {api} from "../../../lib/api";
 import { HomeExamItem } from "@/app/home/HomeExamItem";
+import { NextResponse } from "next/server";
 async function fetchRecommendations(page: number) {
     const res = await api.home.getRecommendations({
         page: page + 1

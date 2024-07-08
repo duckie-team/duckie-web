@@ -2,6 +2,7 @@ import * as API from "./endpoint";
 import { Endpoint } from "./endpoint";
 import { buildRequestError, RequestTimeoutError } from "./error";
 import { pick } from "./util";
+import { cookies } from "next/headers";
 
 export interface ClientOptions {
   auth?: string;
@@ -55,9 +56,9 @@ abstract class EndpointClient {
 
   private authAsHeaders(): Record<string, string> {
     const headers: Record<string, string> = {};
-    const authHeaderValue = this.auth;
-    if (authHeaderValue !== undefined) {
-      headers["Authorization"] = `Bearer ${authHeaderValue}`;
+    const token = cookies().get('accessToken')?.value
+    if ( token !== undefined) {
+      headers['Authorization'] = `Bearer ${token}`
     }
     return headers;
   }
