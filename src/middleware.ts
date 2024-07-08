@@ -19,9 +19,12 @@ export async function middleware(request: NextRequest) {
     }
     if (user !== undefined) {
       if (user.status == UserStatus.READY) {
-        return response.redirect(new URL('/home', request.url))
+        const realRes = response.redirect(new URL('/home', request.url))
+        console.log(res.accessToken)
+        realRes.cookies.set("accessToken", res.accessToken)
+        return realRes
       } else if (user.status == UserStatus.NEW) {
-        return response.redirect(new URL('/onboarding', request.url))
+        return response.redirect(new URL('/onboarding', request.url)).cookies.set("accessToken", res.accessToken)
       }
     }
   }

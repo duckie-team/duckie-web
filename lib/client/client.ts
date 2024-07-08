@@ -2,7 +2,7 @@ import * as API from "./endpoint";
 import { Endpoint } from "./endpoint";
 import { buildRequestError, RequestTimeoutError } from "./error";
 import { pick } from "./util";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 
 export interface ClientOptions {
   auth?: string;
@@ -55,12 +55,15 @@ abstract class EndpointClient {
   }
 
   private authAsHeaders(): Record<string, string> {
-    const headers: Record<string, string> = {};
-    const token = cookies().get('accessToken')?.value
+    const duckieHeaders: Record<string, string> = {};
+    const nextHeaders = headers();
+    console.log(nextHeaders)
+    const token = nextHeaders.get('cookie')?.split('accessToken=')[1]
+    console.log(token)
     if ( token !== undefined) {
-      headers['Authorization'] = `Bearer ${token}`
+      duckieHeaders['Authorization'] = `Bearer ${token}`
     }
-    return headers;
+    return duckieHeaders;
   }
 
   private async request<ResponseBody>({
